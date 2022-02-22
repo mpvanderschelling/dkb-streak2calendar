@@ -4,10 +4,10 @@ import json
 
 def getPipelineData():
     
-    with open('pipelinekey.txt') as f:
+    with open('streak_pipelinekey.txt') as f:
         pipelineKey = f.read().rstrip()
     
-    with open('apikey.txt') as g:
+    with open('streak_apikey.txt') as g:
         apiKey = g.read().rstrip()
     
     url = f"https://www.streak.com/api/v1/pipelines/{pipelineKey}/boxes"
