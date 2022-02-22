@@ -1,0 +1,4 @@
+apikey.txt
+pipelinekey.txt
+__pycache__/
+*.csv
