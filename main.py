@@ -11,6 +11,7 @@ import pandas as pd
 from enum import Enum
 
 from utils.request import getPipelineData
+from utils.casting import ConvertMiliSecondsToString, ConvertToEvent
 
 class Stages(Enum):
     AANVRAAG = '5001'
@@ -34,6 +35,8 @@ class Fields(Enum):
     LOG = '1016'
 
 
+
+    
 aanvragen = getPipelineData()
 
 
@@ -44,8 +47,11 @@ for entry in aanvragen:
     g[entry['name']] = [entry['fields'][field.value] if field.value in entry['fields'] else None for field in list(Fields) ]
     g[entry['name']].append(Stages(entry['stageKey']).name)
 
+
+
 df = pd.DataFrame.from_dict(g, columns=columns, orient='index')
-df = df.replace('',None)
-df['DATUM'] = df['DATUM'].astype('datetime64[ms]')
+df.fillna("",inplace=True)
+
+df['DATUM'] = df['DATUM'].apply(lambda x: ConvertMiliSecondsToString(x))
 
 df.to_csv('test.csv')
