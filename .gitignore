@@ -1,6 +1,5 @@
 streak_apikey.txt
-streak_pipelinekey.txt
 __pycache__/
 *.csv
 client_secret_GoogleCloudDemo.json
-token files/
+token_calendar_v3.pickle
