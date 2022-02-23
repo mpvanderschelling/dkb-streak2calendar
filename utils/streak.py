@@ -3,13 +3,12 @@ import json
 
 
 class StreakAPI:
-    def __init__(self, PIPELINEKEY='agxzfm1haWxmb29nYWVyPgsSDE9yZ2FuaXphdGlvbiIXZGVrbGl0dGVuYmFuZEBnbWFpbC5jb20MCxIIV29ya2Zsb3cYgIDKl7bc5wsM',
-                 APIKEYLOC='./streak_keys/streak_apikey.txt',):
+    def __init__(self, PIPELINEKEY='agxzfm1haWxmb29nYWVyPgsSDE9yZ2FuaXphdGlvbiIXZGVrbGl0dGVuYmFuZEBnbWFpbC5jb20MCxIIV29ya2Zsb3cYgIDKl7bc5wsM'):
         
         self.pipelineKey = PIPELINEKEY
         self.url = f"https://www.streak.com/api/v1/pipelines/{PIPELINEKEY}/boxes"
         
-        with open('./streak_keys/streak_apikey.txt') as g:
+        with open('streak_apikey.txt') as g:
             self.apiKey = g.read().rstrip()
             
             
