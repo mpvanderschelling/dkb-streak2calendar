@@ -1,13 +1,17 @@
 # DKB Streak-Calendar script
-Application to automatically export Streak data to Google Calendar 
+Application to automatically export Streak data to Google Calendar.
 
-# Getting started
+Gigs that are labelled 'Afgezegd' will not be synched and removed from the calendar.
 
-* Make a new Python environment based on the `requirements.txt`
+## Getting started
 
-Files you have to add yourself locally:
-* `client_secret_GoogleCloudDemo.json`: OAuth file from Google
-* `streak_apikey.txt`: API key retrieved from Streak.
-* `token_calendar_v3.pickle`: Sign-in token file retrieved from Google
+1. Make a new Python environment based on the `requirements.txt`
 
-* Execute script by calling `main.py`
+2. Files you have to add yourself locally:
+  * `client_secret_GoogleCloudDemo.json`: OAuth file from Google
+  * `streak_apikey.txt`: API key retrieved from Streak.
+  * `token_calendar_v3.pickle`: Sign-in token file retrieved from Google
+
+3. Execute script by calling `main.py`
+
+_&copy; De Klittenband_
