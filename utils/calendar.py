@@ -23,17 +23,7 @@ class GoogleAPI():
              self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
              return   
 
-    def deleteEvent(self, event):
-        #retrieve eventdata
-        if not event['start']['date']:
-            return
-        
-        eventId = self.getEventID(event['summary'].split(' // ')[1])
-        
-        if eventId is None:
-            #do nothing
-            return
-        
+    def deleteEvent(self, eventId):       
         self.service.events().delete(calendarId=self.calendar_id, eventId=eventId).execute()
 
 
@@ -63,7 +53,7 @@ class GoogleAPI():
         
         #afgezegde gigs automatisch verwijderen uit agenda
         if 'Afgezegd' in event['summary'].split(' // ')[0] and eventId is not None:
-            self.deleteEvent(event)
+            self.deleteEvent(eventId)
             return
         
         if eventId is None:
