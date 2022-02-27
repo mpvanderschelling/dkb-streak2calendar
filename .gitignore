@@ -1,5 +1,9 @@
+# SECRET API KEY FILES
 streak_apikey.txt
-__pycache__/
-*.csv
 client_secret_GoogleCloudDemo.json
 token_calendar_v3.pickle
+
+# PYTHON
+__pycache__/
+
+
