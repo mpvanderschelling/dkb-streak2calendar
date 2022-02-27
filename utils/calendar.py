@@ -36,22 +36,14 @@ class GoogleAPI():
 
     def getEventID(self, name):
         events = self.getAllEvents()
-        myCalendar = filter(lambda x: name in x['summary'].split(' // ')[1], events )
+        myCalendar = filter(lambda x: name == x['summary'].split(' // ')[1], events )
         try:
             f = next(myCalendar)
         except StopIteration:
             return None
         
         return f['id']
-    
-    # def getEventID(self, name):
-    #     events = self.getAllEvents()
-    #     for event in events:
-    #         if event['summary'].split(' // ')[1] == name:
-    #             return event['id']
-            
-    #     return None
-    
+        
     def getAllEvents(self):
 
         response = self.service.events().list(
@@ -84,17 +76,20 @@ class GoogleAPI():
         #retrieve eventdata
         if not event['start']['date']:
             return
-        
+        print(f'check event: {event["summary"]}')
         eventId = self.getEventID(event['summary'].split(' // ')[1])
         
         #afgezegde gigs automatisch verwijderen uit agenda
         if 'Afgezegd' in event['summary'].split(' // ')[0] and eventId is not None:
+                        
             self.deleteEvent(eventId)
+            print(f'delete event: {eventId} : {event["summary"]}')
             return
         
         if 'Afgezegd' not in event['summary'].split(' // ')[0] and eventId is None:
             #make a new event
             self.addNewEvent(event)
+            print(f'add event: {event["summary"]}')
             return
         
         if eventId is None:
