@@ -17,6 +17,8 @@ if __name__ == '__main__':
     df = ConvertJSONToDataFrame(s.getPipelineData())
     
     events = [ConvertToEvent(df.iloc[i]) for i in range(len(df))]
-           
+
+    # g.deleteAllEvents()
+    
     for event in events:
         g.updateEvent(event)

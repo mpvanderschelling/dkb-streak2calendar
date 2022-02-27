@@ -19,30 +19,66 @@ class GoogleAPI():
         
     
     def addNewEvent(self,event):
-         if event['start']['date']:
-             self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
-             return   
+        self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
+        return   
 
     def deleteEvent(self, eventId):       
         self.service.events().delete(calendarId=self.calendar_id, eventId=eventId).execute()
+        return
+
+    def deleteAllEvents(self):
+        events = self.getAllEvents()
+        for event in events:
+            self.deleteEvent(event['id'])
+            
+        return
 
 
     def getEventID(self, name):
         events = self.getAllEvents()
-        for event in events:
-            if event['summary'].split(' // ')[1] == name:
-                return event['id']
+        myCalendar = filter(lambda x: name in x['summary'].split(' // ')[1], events )
+        try:
+            f = next(myCalendar)
+        except StopIteration:
+            return None
+        
+        return f['id']
+    
+    # def getEventID(self, name):
+    #     events = self.getAllEvents()
+    #     for event in events:
+    #         if event['summary'].split(' // ')[1] == name:
+    #             return event['id']
             
-        return None
+    #     return None
     
     def getAllEvents(self):
-        page_token = None
-        while True:
-          events = self.service.events().list(calendarId=self.calendar_id, pageToken=page_token).execute()
-          page_token = events.get('nextPageToken')
-          if not page_token:
-            break    
-        return events['items']
+
+        response = self.service.events().list(
+          maxResults=250,
+          showDeleted=False,
+          # showHidden=False,
+          calendarId=self.calendar_id, 
+          ).execute()
+        
+        calendarItems = response.get('items')
+        nextPageToken = response.get('nextPageToken')
+        
+        while nextPageToken:
+          response = self.service.events().list(
+              maxResults=250,
+              showDeleted=False,
+              # showHidden=False,
+              calendarId=self.calendar_id, 
+              pageToken=nextPageToken
+          ).execute()
+          
+          calendarItems.extend(response.get('items'))
+          nextPageToken = response.get('nextPageToken')
+          
+
+        return calendarItems
+    
     
     def updateEvent(self, event):
         #retrieve eventdata
@@ -56,13 +92,16 @@ class GoogleAPI():
             self.deleteEvent(eventId)
             return
         
-        if eventId is None:
+        if 'Afgezegd' not in event['summary'].split(' // ')[0] and eventId is None:
             #make a new event
             self.addNewEvent(event)
             return
-        else:
-            #update event    
-            self.service.events().update(calendarId=self.calendar_id, eventId=eventId, body=event).execute()
+        
+        if eventId is None:
+            return
+        
+        #update event    
+        self.service.events().update(calendarId=self.calendar_id, eventId=eventId, body=event).execute()
         
         
 if __name__ == '__main__':
