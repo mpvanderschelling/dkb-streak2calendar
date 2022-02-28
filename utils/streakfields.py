@@ -28,3 +28,7 @@ class Fields(Enum):
     GEEN_ANTWOORD = '1015'
     TIJDEN = '1013'
     LOG = '1016'
+    
+    
+class Emails(Enum):
+    MCtest = 'mpvanderschelling@gmail.com'

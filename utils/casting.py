@@ -7,7 +7,7 @@ Created on Wed Feb 23 11:49:40 2022
 """
 
 from datetime import datetime
-from utils.streakfields import Stages, Fields
+from utils.streakfields import Stages, Fields, Emails
 import pandas as pd
 
 
@@ -46,6 +46,7 @@ def ConvertToEvent(s):
       'end': {
         'date': f"{s['DATUM']}",
       },
+      'attendees': ConvertToAttendees(s['BESCHIKBAAR'].replace(" ","").split(','))
       
   }
     
@@ -53,6 +54,11 @@ def ConvertToEvent(s):
     
 
 
+def ConvertToAttendees(names: list):
+    return [{'email': Emails[name].value, 'responseStatus': 'needsAction'} for name in names if name in Emails.__members__]
+
+
+    #a.replace(" ","").split(',')
     
 if __name__ == '__main__':
     pass

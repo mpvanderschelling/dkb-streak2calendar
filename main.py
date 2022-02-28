@@ -8,7 +8,7 @@ Created on Tue Feb 22 13:11:39 2022
 
 from utils.streak import StreakAPI
 from utils.calendar import GoogleAPI
-from utils.casting import ConvertToEvent, ConvertJSONToDataFrame
+from utils.casting import ConvertToEvent, ConvertJSONToDataFrame, ConvertToAttendees
 
 if __name__ == '__main__':
     s = StreakAPI()

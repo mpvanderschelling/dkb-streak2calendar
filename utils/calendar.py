@@ -8,6 +8,7 @@ Created on Tue Feb 22 16:55:13 2022
 
 from utils.google_apis import create_service
 
+
 class GoogleAPI():
     def __init__(self, CLIENT_SECRET_FILE='client_secret_GoogleCloudDemo.json',
                  API_NAME='calendar',
@@ -23,7 +24,7 @@ class GoogleAPI():
         return   
 
     def deleteEvent(self, eventId):       
-        self.service.events().delete(calendarId=self.calendar_id, eventId=eventId).execute()
+        self.service.events().delete(calendarId=self.calendar_id, eventId=eventId, sendUpdates='all').execute()
         return
 
     def deleteAllEvents(self):
@@ -71,7 +72,16 @@ class GoogleAPI():
 
         return calendarItems
     
-    
+    def getAttendees(self, event_id):
+        event = self.service.events().get(calendarId=self.calendar_id, eventId=event_id).execute()
+        if not 'attendees' in event:
+            return None
+        
+        return event['attendees']
+        
+    def updateAttendees(self, event, event_id):
+        pass
+
     def updateEvent(self, event):
         #retrieve eventdata
         if not event['start']['date']:
