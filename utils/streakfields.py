@@ -31,4 +31,4 @@ class Fields(Enum):
     
     
 class Emails(Enum):
-    MCtest = 'mpvanderschelling@gmail.com'
+    MCtest = 'M.P.vanderSchelling@tudelft.nl'

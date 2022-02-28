@@ -20,7 +20,7 @@ class GoogleAPI():
         
     
     def addNewEvent(self,event):
-        self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
+        self.service.events().insert(calendarId=self.calendar_id, body=event, sendUpdates='all').execute()
         return   
 
     def deleteEvent(self, eventId):       
@@ -106,7 +106,8 @@ class GoogleAPI():
             return
         
         #update event    
-        self.service.events().update(calendarId=self.calendar_id, eventId=eventId, body=event).execute()
+        # self.service.events().update(calendarId=self.calendar_id, eventId=eventId, body=event).execute()
+        self.service.events().patch(calendarId=self.calendar_id, eventId=eventId, body=event, sendUpdates='externalOnly').execute()
         
         
 if __name__ == '__main__':
