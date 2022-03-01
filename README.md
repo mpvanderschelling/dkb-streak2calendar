@@ -11,6 +11,7 @@ Gigs that are labelled 'Afgezegd' will not be synched and removed from the calen
   * `client_secret_GoogleCloudDemo.json`: OAuth file from Google
   * `streak_apikey.txt`: API key retrieved from Streak.
   * `token_calendar_v3.pickle`: Sign-in token file retrieved from Google
+  * `/utils/emails.py`: Emailadresses of external members of the calendar
 
 3. Execute script by calling `main.py`
 
