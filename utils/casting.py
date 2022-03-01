@@ -55,7 +55,7 @@ def ConvertToEvent(s):
 
 
 def ConvertToAttendees(names: list):
-    return [{'email': Emails[name].value, 'responseStatus': 'needsAction'} for name in names if name in Emails.__members__]
+    return [{'email': Emails[name].value} for name in names if name in Emails.__members__] #'responseStatus': 'needsAction'
 
 
     #a.replace(" ","").split(',')

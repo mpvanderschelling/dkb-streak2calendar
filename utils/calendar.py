@@ -75,12 +75,24 @@ class GoogleAPI():
     def getAttendees(self, event_id):
         event = self.service.events().get(calendarId=self.calendar_id, eventId=event_id).execute()
         if not 'attendees' in event:
-            return None
+            return []
         
         return event['attendees']
         
     def updateAttendees(self, event, event_id):
-        pass
+        list_google = self.getAttendees(event_id)
+        list_streak = event['attendees']
+        list_new = []
+        
+        
+        for att_streak in list_streak:
+            if att_streak['email'] in [att_google['email'] for att_google in list_google]:
+                list_new.append(next(x for x in list_google if x['email'] == att_streak['email']))
+                
+            if att_streak['email'] not in [att_google['email']for att_google in list_google]:
+                list_new.append(att_streak)
+        
+        return list_new
 
     def updateEvent(self, event):
         #retrieve eventdata
@@ -105,7 +117,8 @@ class GoogleAPI():
         if eventId is None:
             return
         
-        #update event    
+        #update event
+        event['attendees'] = self.updateAttendees(event, eventId)
         # self.service.events().update(calendarId=self.calendar_id, eventId=eventId, body=event).execute()
         self.service.events().patch(calendarId=self.calendar_id, eventId=eventId, body=event, sendUpdates='externalOnly').execute()
         
@@ -113,3 +126,21 @@ class GoogleAPI():
 if __name__ == '__main__':
     pass
         
+
+a = [{'email': 'dot', 'responseStatus': '1'},
+      {'email': 'cross', 'responseStatus': '1'},
+      {'email': 'star', 'responseStatus': '1'},
+      {'email': 'circle', 'responseStatus': '1'},
+      {'email': 'square', 'responseStatus': '1'}
+      ]
+
+b = [{'email': 'cross', 'responseStatus': '0'},
+      {'email': 'circle', 'responseStatus': '0'},
+      {'email': 'square', 'responseStatus': '0'},
+      {'email': 'star', 'responseStatus': '0'},
+      ]
+
+     
+
+
+
