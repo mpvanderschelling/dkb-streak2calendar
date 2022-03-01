@@ -3,6 +3,9 @@ streak_apikey.txt
 client_secret_GoogleCloudDemo.json
 token_calendar_v3.pickle
 
+# EMAIL ADRESSES
+emails.py
+
 # PYTHON
 __pycache__/
 

@@ -119,27 +119,8 @@ class GoogleAPI():
         
         #update event
         event['attendees'] = self.updateAttendees(event, eventId)
-        # self.service.events().update(calendarId=self.calendar_id, eventId=eventId, body=event).execute()
         self.service.events().patch(calendarId=self.calendar_id, eventId=eventId, body=event, sendUpdates='externalOnly').execute()
         
-        
-if __name__ == '__main__':
-    pass
-        
-
-a = [{'email': 'dot', 'responseStatus': '1'},
-      {'email': 'cross', 'responseStatus': '1'},
-      {'email': 'star', 'responseStatus': '1'},
-      {'email': 'circle', 'responseStatus': '1'},
-      {'email': 'square', 'responseStatus': '1'}
-      ]
-
-b = [{'email': 'cross', 'responseStatus': '0'},
-      {'email': 'circle', 'responseStatus': '0'},
-      {'email': 'square', 'responseStatus': '0'},
-      {'email': 'star', 'responseStatus': '0'},
-      ]
-
      
 
 

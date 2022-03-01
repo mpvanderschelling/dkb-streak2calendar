@@ -20,9 +20,4 @@ class StreakAPI:
         
     def getPipelineData(self):
         response = requests.request("GET", self.url, headers=self.headers)
-        return json.loads(response.text)        
-
-
-
-if __name__ == '__main__':
-    pass
+        return json.loads(response.text)

@@ -43,6 +43,3 @@ def create_service(client_secret_file, api_name, api_version, *scopes, prefix=''
 		print(f'Failed to create service instance for {API_SERVICE_NAME}')
 		os.remove(os.path.join(working_dir, token_dir, pickle_file))
 		return None
-
-if __name__ == '__main__':
-    pass
