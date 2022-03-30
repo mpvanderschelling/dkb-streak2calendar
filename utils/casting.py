@@ -40,14 +40,15 @@ def ConvertToEvent(s):
     event = {
       'summary': f"{s['STATUS'].capitalize()} // {s.name}".replace("_"," "),
       'location': f"{s['STAD']} - {s['LOCATIE']}",
-      'description': f'''J: {s['BESCHIKBAAR']}\nN: {s['NIET_BESCHIKBAAR']}\n?: {s['GEEN_ANTWOORD']}\n\n{s['TIJDEN']}\n\n{s['LOG']}''',
+      'description': f'''J: {s['BESCHIKBAAR']}\nN: {s['NIET_BESCHIKBAAR']}\n?: {s['GEEN_ANTWOORD']}\n\n{s['TIJDEN']}''',
       'start': {
         'date': f"{s['DATUM']}",
       },
       'end': {
         'date': f"{s['DATUM']}",
       },
-      'attendees': ConvertToAttendees(s['BESCHIKBAAR'].replace(" ","").split(','))
+      'attendees': ConvertToAttendees(s['BESCHIKBAAR'].replace(" ","").split(',')),
+      'line-up': s['BESCHIKBAAR'].replace(" ","").split(',')
       
   }
     

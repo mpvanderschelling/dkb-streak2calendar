@@ -11,6 +11,7 @@ from utils.calendar import GoogleAPI
 from utils.casting import ConvertToEvent, ConvertJSONToDataFrame
 
 if __name__ == '__main__':
+       
     s = StreakAPI()
     g = GoogleAPI()
     
@@ -19,6 +20,6 @@ if __name__ == '__main__':
     events = [ConvertToEvent(df.iloc[i]) for i in range(len(df))]
     
     for event in events:
-        g.updateEvent(event)
+        g.run(event)
         
         
