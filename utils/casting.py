@@ -8,7 +8,6 @@ Created on Wed Feb 23 11:49:40 2022
 
 from datetime import datetime
 from utils.streakfields import Stages, Fields
-from utils.emails import Emails
 import pandas as pd
 
 
@@ -40,24 +39,18 @@ def ConvertToEvent(s):
     event = {
       'summary': f"{s['STATUS'].capitalize()} // {s.name}".replace("_"," "),
       'location': f"{s['STAD']} - {s['LOCATIE']}",
-      'description': f'''J: {s['BESCHIKBAAR']}\nN: {s['NIET_BESCHIKBAAR']}\n?: {s['GEEN_ANTWOORD']}\n\n{s['TIJDEN']}\n\n{s['TECHNIEK']}''',
+      'description': f'''J: {s['BESCHIKBAAR']}\nN: {s['NIET_BESCHIKBAAR']}\n\nTijden: {s['TIJDEN']}\n\nTechniek: {s['TECHNIEK']}''',
       'start': {
         'date': f"{s['DATUM']}",
       },
       'end': {
         'date': f"{s['DATUM']}",
       },
-      'attendees': ConvertToAttendees(s['BESCHIKBAAR'].replace(" ","").split(',')),
       'line-up': s['BESCHIKBAAR'].replace(" ","").split(',')
       
   }
     
     return event
-    
-
-def ConvertToAttendees(names: list):
-    return [{'email': Emails[name].value} for name in names if name in Emails.__members__] #'responseStatus': 'needsAction'
-    
 
 
     

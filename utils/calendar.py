@@ -31,9 +31,7 @@ class GoogleAPI():
         
         
         self.service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-        #self.calendar_id = '138rjpv797dnj06tbggu8m0l1g@group.calendar.google.com' #DKB Streak-Calendar
-        #self.calendar_id = 'primary'
-        
+       
     
     def addNewEvent(self, event, calendar):
         self.service.events().insert(calendarId=calendar, body=event, sendUpdates='all').execute()
@@ -66,7 +64,6 @@ class GoogleAPI():
         response = self.service.events().list(
           maxResults=250,
           showDeleted=False,
-          # showHidden=False,
           calendarId=calendar, 
           ).execute()
         
@@ -77,7 +74,6 @@ class GoogleAPI():
           response = self.service.events().list(
               maxResults=250,
               showDeleted=False,
-              # showHidden=False,
               calendarId=calendar, 
               pageToken=nextPageToken
           ).execute()
@@ -88,27 +84,6 @@ class GoogleAPI():
 
         return calendarItems
     
-    def getAttendees(self, event_id, calendar):
-        event = self.service.events().get(calendarId=calendar, eventId=event_id).execute()
-        if not 'attendees' in event:
-            return []
-        
-        return event['attendees']
-        
-    def updateAttendees(self, event, event_id, calendar):
-        list_google = self.getAttendees(event_id, calendar)
-        list_streak = event['attendees']
-        list_new = []
-        
-        
-        for att_streak in list_streak:
-            if att_streak['email'] in [att_google['email'] for att_google in list_google]:
-                list_new.append(next(x for x in list_google if x['email'] == att_streak['email']))
-                
-            if att_streak['email'] not in [att_google['email']for att_google in list_google]:
-                list_new.append(att_streak)
-        
-        return list_new
 
     def updateEvent(self, event, calendarname='DKB'):
         calendar = self.calendars[calendarname]
@@ -134,6 +109,11 @@ class GoogleAPI():
             return
         
         if 'Afgezegd' not in event['summary'].split(' // ')[0] and eventId is None:
+            
+            #add trikyra to have an email notification
+            # if calendarname == 'DKB':
+            #     event['attendees'] = [{'email': 'info@trikyra.nl'}]   
+            
             #make a new event
             self.addNewEvent(event, calendar)
             print(f'add event for {calendarname}: {event["summary"]}')
@@ -142,15 +122,9 @@ class GoogleAPI():
         if eventId is None:
             return
         
-
-        
         #update event
-        event['attendees'] = self.updateAttendees(event, eventId, calendar)
-        self.service.events().patch(calendarId=calendar, eventId=eventId, body=event, sendUpdates='externalOnly').execute()
+        self.service.events().patch(calendarId=calendar, eventId=eventId, body=event, sendUpdates='all').execute()
         
     def run(self, event):
         for name in list(self.calendars.keys()):
-            self.updateEvent(event, calendarname=name)     
-
-
-
+            self.updateEvent(event, calendarname=name)
