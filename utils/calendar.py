@@ -26,7 +26,8 @@ class GoogleAPI():
                      'Lloyd': 'mcolkur10fp0jgofkkgpq70q04@group.calendar.google.com',
                      'Boris': 'aomobmn7pme0oc6ou7qcmr5u30@group.calendar.google.com',
                      'Eli': 'eu38pnlbp89ua67r698nna9ht4@group.calendar.google.com',
-                     'Thomas': 'o3o6vphbt11khijbnh7k988hc8@group.calendar.google.com'}
+                     'Thomas': 'o3o6vphbt11khijbnh7k988hc8@group.calendar.google.com',
+                     'Jeshja': 'bht6foqa1c29ctfm48qbihvios@group.calendar.google.com'}
         
         
         
